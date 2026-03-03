@@ -1,13 +1,11 @@
-package com.example.businesscardapp
-
-
+package com.example.businesscard
 
 import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.background
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -34,7 +32,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            PremiumBusinessCard()
+            MaterialTheme {
+                PremiumBusinessCard()
+            }
         }
     }
 }
@@ -42,7 +42,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun PremiumBusinessCard() {
 
-    // 💜 Purple Gradient Background
     val gradient = Brush.verticalGradient(
         colors = listOf(
             Color(0xFFEDE7F6), // Light purple
@@ -53,71 +52,60 @@ fun PremiumBusinessCard() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(gradient)
-            .padding(16.dp)
+            .background(gradient),
+        contentAlignment = Alignment.Center // Centers everything
     ) {
 
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
+        Card(
+            modifier = Modifier
+                .fillMaxWidth(0.9f)
+                .shadow(12.dp, RoundedCornerShape(24.dp)),
+            shape = RoundedCornerShape(24.dp),
+            colors = CardDefaults.cardColors(containerColor = Color.White)
         ) {
 
-            // Push card to center
-            Spacer(modifier = Modifier.weight(1f))
-
-            // 🪪 Profile Card
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .shadow(12.dp, RoundedCornerShape(24.dp)),
-                shape = RoundedCornerShape(24.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White)
-            ) {
-
-                Column(
-                    modifier = Modifier.padding(24.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-
-                    // Profile Image
-                    Image(
-                        painter = painterResource(id = R.drawable.profile),
-                        contentDescription = "Profile Image",
-                        modifier = Modifier
-                            .size(120.dp)
-                            .clip(CircleShape)
-                    )
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    // Name
-                    Text(
-                        text = "Hazle",
-                        fontSize = 28.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Black
-                    )
-
-                    // Role
-                    Text(
-                        text = "Android Developer",
-                        fontSize = 18.sp,
-                        color = Color(0xFF7E57C2),
-                        fontWeight = FontWeight.Medium
-                    )
-                }
-            }
-
-            // Push contact section to bottom
-            Spacer(modifier = Modifier.weight(1f))
-
-            //  Contact Details
             Column(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .padding(24.dp)
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
             ) {
+
+                // Profile Image
+                Image(
+                    painter = painterResource(id = R.drawable.profile),
+                    contentDescription = "Profile Image",
+                    modifier = Modifier
+                        .size(120.dp)
+                        .clip(CircleShape)
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Name
+                Text(
+                    text = "Hazle",
+                    fontSize = 28.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Black
+                )
+
+                // Role
+                Text(
+                    text = "Android Developer",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = Color(0xFF7E57C2)
+                )
+
+                Spacer(modifier = Modifier.height(24.dp))
 
                 Divider(thickness = 1.dp, color = Color.LightGray)
 
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Contact Details
                 ContactRow(Icons.Default.Phone, "+91 123456789")
                 ContactRow(Icons.Default.Email, "hazle@gmail.com")
                 ContactRow(Icons.Default.Place, "abx, xyz")
@@ -126,7 +114,6 @@ fun PremiumBusinessCard() {
     }
 }
 
-//Contact Row Component
 @Composable
 fun ContactRow(icon: ImageVector, text: String) {
 
@@ -153,10 +140,6 @@ fun ContactRow(icon: ImageVector, text: String) {
         )
     }
 }
-
-
-// 👀 PREVIEWS
-
 
 @Preview(showBackground = true)
 @Composable
